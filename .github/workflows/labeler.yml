@@ -1,16 +1,15 @@
-# Workflow to associate labels automatically
-name: PR-Labeler
-# Trigger the workflow on pull request events
-on:
-- pull_request_target
-
 jobs:
   label:
     permissions:
       contents: read
       pull-requests: write
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - uses: actions/labeler@v4
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+    - continue-on-error: true
+      uses: actions/labeler@v4
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+name: PR-Labeler
+on:
+  repository_dispatch:
+    types: trigger-ga___labeler.yml
